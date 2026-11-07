@@ -3,8 +3,4 @@ A python library to visualize 3DoF motions in a plane (2 translation and 1 orien
 
 ## Examples
 
-![Alt text](./car_turn.gif)
-
-![Alt text](./quad_turn.gif)
-
 ![Alt text](./obstacle_chase.gif)
