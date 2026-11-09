@@ -2,7 +2,7 @@ import tomllib
 
 import numpy as np
 
-from agentsandobstacle import Agent, AgentsAndObstacle, Obstacle, Time
+from agentsandobstacles import Agent, AgentsAndObstacles, Obstacle, Time
 
 
 def agent_1_path(time: Time):
@@ -34,7 +34,7 @@ def agent_2_path(time: Time):
 
 def setup():
  
-    with open('vehicle_shapes.toml','rb') as f:
+    with open(r'..\agentsandobstacles\vehicle_shapes.toml','rb') as f:
         shapes=tomllib.load(f)
 
     time_cfg = Time(t0=0.0, tf=10.0, intervals=200)
@@ -87,8 +87,8 @@ def setup():
     )
 
     # Run the visualization
-    ao=AgentsAndObstacle(agents=[agent1, agent2], obstacles=[obstacle1,obstacle2], time=time_cfg)
-    ao.visualize()
+    ao=AgentsAndObstacles(agents=[agent1, agent2], obstacles=[obstacle1,obstacle2], time=time_cfg)
+    ao.visualize(filename='light')
 
 if __name__ == "__main__":
     setup()

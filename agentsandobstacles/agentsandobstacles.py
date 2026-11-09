@@ -86,15 +86,15 @@ class Agent:
     _theta: np.ndarray | None = None
     _polygon: Polygon | None = None
 
-    def get_vertices_new(self, time: Time)->None:
-        '''
+    def get_vertices_new(self, time: Time) -> None:
+        """
         compute the transformed polygon vertices for all times
 
         Parameters
         ----------
         time : Time
             time config file
-        '''
+        """
         # how the shape changes over time
         x, y, theta = self.path(time)
         # Vectorized batch transformation
@@ -113,14 +113,14 @@ class Agent:
         self._y = y
         self._theta = theta
 
-    def get_polygon_new(self)->None:
-        '''
+    def get_polygon_new(self) -> None:
+        """
         initializes the polygon object
 
         this will be initialized once but
         reused to update the coordinates
         to save time
-        '''
+        """
         poly = Polygon(
             self._vertices_new[0, :, :],
             closed=True,
@@ -168,19 +168,19 @@ class Obstacle:
     _vertices_new: np.ndarray | None = None
     _polygon: Polygon | None = None
 
-    def get_vertices_new(self)->None:
-        '''
+    def get_vertices_new(self) -> None:
+        """
         compute the transformed coordinates for
         vertices
-        '''
+        """
         v = np.array(self.vertices)
         c, s = np.cos(self.theta), np.sin(self.theta)
         R = np.array([[c, -s], [s, c]])
         v_new = v @ R.T + np.array(self.center)
         self._vertices_new = v_new
 
-    def get_polygon_new(self)->None:
-        '''
+    def get_polygon_new(self) -> None:
+        """
         initialized the polygon
 
         for the obstacle this polygon will
@@ -190,7 +190,7 @@ class Obstacle:
         ------
         ValueError
             if transformed vertices are not calculated
-        '''
+        """
         if self._vertices_new is None:
             raise ValueError("get_vertices_new must be called before get_polygon_new")
         poly = Polygon(
@@ -205,14 +205,14 @@ class Obstacle:
         )
         self._polygon = poly
 
+
 @dataclass
-class AgentsAndObstacle:
+class AgentsAndObstacles:
+    time: Time
+    agents: list[Agent]
+    obstacles: list[Obstacle]
 
-    time:Time
-    agents:list[Agent]
-    obstacles:list[Obstacle]
-
-    def visualize(self):
+    def visualize(self, save:bool=True,filename: str = "motion"):
         fig, ax = plt.subplots(figsize=(9, 9))
         ax.set_aspect("equal")
 
@@ -238,7 +238,7 @@ class AgentsAndObstacle:
             # tranfer the polygon object to figure
             ax.add_patch(agent._polygon)
 
-        self.autoscale(ax,all_x=all_x,all_y=all_y)
+        self.autoscale(ax, all_x=all_x, all_y=all_y)
 
         ax.set_title("Multi-Agent Simulation")
         ax.grid(True, linestyle=":", alpha=0.5)
@@ -259,12 +259,24 @@ class AgentsAndObstacle:
             interval=self.time.get_sampling_time(),
             blit=True,
         )
-        plt.show()
+
+        if save:
+            ani.save(
+                f"{filename}.mp4",
+                writer="ffmpeg",
+                fps=(self.time.intervals) / (self.time.tf - self.time.t0),
+                dpi=200,
+                bitrate=2000,
+                extra_args=['-preset', 'ultrafast']
+            )
+            print('File save successfull')
+        else:
+            plt.show()
 
     @classmethod
-    def autoscale(cls,ax,all_x,all_y):
+    def autoscale(cls, ax, all_x, all_y):
         if all_x and all_y:
             max_range = max(np.ptp(all_x), np.ptp(all_y)) / 2 * 1.15
             mid_x, mid_y = np.mean(all_x), np.mean(all_y)
             ax.set_xlim(mid_x - max_range, mid_x + max_range)
-            ax.set_ylim(mid_y - max_range, mid_y + max_range)        
+            ax.set_ylim(mid_y - max_range, mid_y + max_range)

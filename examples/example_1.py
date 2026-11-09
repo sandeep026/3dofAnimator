@@ -2,7 +2,7 @@ import tomllib
 
 import numpy as np
 
-from agentsandobstacle import Agent, AgentsAndObstacle, Time, Obstacle
+from agentsandobstacles import Agent, AgentsAndObstacles, Time, Obstacle
 
 
 def make_lissajous(w, h, v_freq, phase_x=0, phase_y=0):
@@ -46,7 +46,7 @@ def make_figure_eight(scale_w, scale_h, speed):
 
 def setup():
 
-    with open("vehicle_shapes.toml", "rb") as f:
+    with open(r"..\agentsandobstacles\vehicle_shapes.toml", "rb") as f:
         shapes = tomllib.load(f)
 
     time_cfg = Time(t0=0.0, tf=20.0, intervals=400)
@@ -54,140 +54,140 @@ def setup():
     # --- Instantiate 20 Agents ---
     agents = [
         Agent(
-            "Agent 1 (Jet)",
+            "Agent 1",
             shapes["fighter_jet"],
             make_lissajous(10, 8, 0.8, 0, 0),
             "skyblue",
             "navy",
         ),
         Agent(
-            "Agent 2 (Rocket)",
+            "Agent 2",
             shapes["rocket"],
             make_lissajous(12, 6, 1.0, np.pi / 4, 0),
             "salmon",
             "darkred",
         ),
         Agent(
-            "Agent 3 (Aircraft)",
+            "Agent 3",
             shapes["aircraft"],
             make_orbit(7.0, 1.1, 0, 0, 0),
             "limegreen",
             "darkgreen",
         ),
         Agent(
-            "Agent 4 (Car)",
+            "Agent 4",
             shapes["car"],
             make_figure_eight(9, 5, 0.9),
             "gold",
             "orange",
         ),
         Agent(
-            "Agent 5 (Bus)",
+            "Agent 5",
             shapes["bus"],
             make_lissajous(8, 10, 0.7, np.pi / 2, np.pi / 3),
             "orchid",
             "purple",
         ),
         Agent(
-            "Agent 6 (Speedboat)",
+            "Agent 6",
             shapes["speedboat"],
             make_orbit(10.0, -0.8, 0, 0, 1.0),
             "cyan",
             "teal",
         ),
         Agent(
-            "Agent 7 (Airship)",
+            "Agent 7",
             shapes["airship"],
             make_figure_eight(11, 7, 0.6),
             "hotpink",
             "deeppink",
         ),
         Agent(
-            "Agent 8 (Catamaran)",
+            "Agent 8",
             shapes["catamaran"],
             make_lissajous(6, 12, 1.3, 1.0, 0),
             "tan",
             "sienna",
         ),
         Agent(
-            "Agent 9 (Cargoship)",
+            "Agent 9",
             shapes["cargoship"],
             make_orbit(8.5, 0.9, 0, 0, 2.5),
             "khaki",
             "olive",
         ),
         Agent(
-            "Agent 10 (Roomba)",
+            "Agent 10",
             shapes["roomba"],
             make_lissajous(9, 9, 1.1, 0.5, 1.5),
             "tomato",
             "firebrick",
         ),
         Agent(
-            "Agent 11 (Jet 2)",
+            "Agent 11",
             shapes["fighter_jet"],
             make_orbit(11.0, -1.0, 0, 0, 0.5),
             "dodgerblue",
             "midnightblue",
         ),
         Agent(
-            "Agent 12 (Rocket 2)",
+            "Agent 12",
             shapes["rocket"],
             make_figure_eight(7, 10, 0.8),
             "coral",
             "saddlebrown",
         ),
         Agent(
-            "Agent 13 (Aircraft 2)",
+            "Agent 13",
             shapes["aircraft"],
             make_lissajous(13, 5, 0.7, 2.0, 1.0),
             "mediumseagreen",
             "darkslategray",
         ),
         Agent(
-            "Agent 14 (Car 2)",
+            "Agent 14",
             shapes["car"],
             make_orbit(6.0, 1.4, 0, 0, 3.0),
             "violet",
             "purple",
         ),
         Agent(
-            "Agent 15 (Bus 2)",
+            "Agent 15",
             shapes["bus"],
             make_lissajous(7, 7, 1.2, 0, np.pi),
             "gold",
             "darkgoldenrod",
         ),
         Agent(
-            "Agent 16 (Speedboat 2)",
+            "Agent 16",
             shapes["speedboat"],
             make_figure_eight(10, 8, 0.7),
             "turquoise",
             "darkcyan",
         ),
         Agent(
-            "Agent 17 (Airship 2)",
+            "Agent 17",
             shapes["airship"],
             make_orbit(9.0, -0.7, 0, 0, 4.0),
             "lightcoral",
             "maroon",
         ),
         Agent(
-            "Agent 18 (Catamaran 2)",
+            "Agent 18",
             shapes["catamaran"],
             make_lissajous(11, 9, 0.9, 1.5, 2.0),
             "yellowgreen",
             "olivedrab",
         ),
         Agent(
-            "Agent 19 (Cargoship 2)",
+            "Agent 19",
             shapes["cargoship"],
             make_figure_eight(8, 11, 1.0),
             "skyblue",
             "darkblue",
         ),
         Agent(
-            "Agent 20 (Roomba 2)",
+            "Agent 20",
             shapes["roomba"],
             make_orbit(12.0, 0.8, 0, 0, 1.5),
             "plum",
@@ -198,7 +198,7 @@ def setup():
     # --- Instantiate 10 Static Obstacles ---
     obstacles = [
         Obstacle(
-            "Obs 1 (Satellite)",
+            "Obs 1",
             shapes["satellite"],
             (6.0, 6.0),
             0.5,
@@ -206,7 +206,7 @@ def setup():
             "black",
         ),
         Obstacle(
-            "Obs 2 (Catamaran)",
+            "Obs 2",
             shapes["catamaran"],
             (-7.0, 5.0),
             1.2,
@@ -214,7 +214,7 @@ def setup():
             "black",
         ),
         Obstacle(
-            "Obs 3 (Cargoship)",
+            "Obs 3",
             shapes["cargoship"],
             (8.0, -5.0),
             -0.8,
@@ -222,7 +222,7 @@ def setup():
             "black",
         ),
         Obstacle(
-            "Obs 4 (Satellite)",
+            "Obs 4",
             shapes["satellite"],
             (-8.0, -6.0),
             0.2,
@@ -230,10 +230,10 @@ def setup():
             "black",
         ),
         Obstacle(
-            "Obs 5 (Airship)", shapes["airship"], (0.0, 9.0), 1.57, "dimgray", "black"
+            "Obs 5", shapes["airship"], (0.0, 9.0), 1.57, "dimgray", "black"
         ),
         Obstacle(
-            "Obs 6 (Speedboat)",
+            "Obs 6",
             shapes["speedboat"],
             (0.0, -9.0),
             0.0,
@@ -241,13 +241,13 @@ def setup():
             "black",
         ),
         Obstacle(
-            "Obs 7 (Roomba)", shapes["roomba"], (10.0, 0.0), 0.78, "dimgray", "black"
+            "Obs 7", shapes["roomba"], (10.0, 0.0), 0.78, "dimgray", "black"
         ),
         Obstacle(
-            "Obs 8 (Rocket)", shapes["rocket"], (-10.0, 0.0), -1.1, "dimgray", "black"
+            "Obs 8", shapes["rocket"], (-10.0, 0.0), -1.1, "dimgray", "black"
         ),
         Obstacle(
-            "Obs 9 (Satellite)",
+            "Obs 9",
             shapes["satellite"],
             (4.0, -8.0),
             2.3,
@@ -255,7 +255,7 @@ def setup():
             "black",
         ),
         Obstacle(
-            "Obs 10 (Catamaran)",
+            "Obs 10",
             shapes["catamaran"],
             (-4.0, 8.0),
             -0.4,
@@ -265,8 +265,8 @@ def setup():
     ]
 
     # --- Run Stress-Test Simulation ---
-    ao = AgentsAndObstacle(agents=agents, obstacles=obstacles, time=time_cfg)
-    ao.visualize()
+    ao = AgentsAndObstacles(agents=agents, obstacles=obstacles, time=time_cfg)
+    ao.visualize(filename='heavy')
 
 
 if __name__ == "__main__":
