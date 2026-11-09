@@ -5,10 +5,8 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
 import matplotlib.animation as animation
 
-# {'vehicle name':vertices}
 with open("vehicle_shapes.toml", "rb") as f:
     registry = tomllib.load(f)
-
 
 def plot_all_shapes():
     for vehicle, coordinates in registry.items():
@@ -430,45 +428,4 @@ def visualize(agents: list[Agent], obstacles: list[Obstacle], t0=0, tf=10, point
     )
     plt.show()
 
-
-# 1. Define Geometries
-car_shape = [[-0.5, 0.25], [1, 0.25], [1, -0.25], [-0.5, -0.25]]
-barrier_shape = [[-0.5, -2], [0.5, -2], [0.5, 2], [-0.5, 2]]
-
-# 2. Instantiate Agents using the Dataclass
-agent_alpha = Agent(
-    name="Vehicle Alpha",
-    shape=car_shape,
-    trajectory=get_trajectory,
-    color="skyblue",
-    edge_color="navy",
-    timelapse_step=100,
-    alpha_ghost=0.25
-)
-
-agent_beta = Agent(
-    name="Vehicle Beta",
-    shape=car_shape,
-    trajectory=get_trajectory2,
-    color="salmon",
-    edge_color="darkred",
-    timelapse_step=80,
-    alpha_ghost=0.3
-)
-
-# 3. Instantiate Obstacles
-road_block = Obstacle(
-    name='bar',
-    shape=barrier_shape,
-    pos=(4.0, 1.0),
-    theta=0.5,
-    color="dimgray",
-    label="Road Barrier"
-)
-
-# 4. Launch Simulation
-visualize(
-    agents=[agent_alpha, agent_beta],
-    obstacles=[road_block],
-    t0=0, tf=10, points=1000
-)
+visualize_v1()
